@@ -3,10 +3,10 @@
 
 Original Author: Joshua Novikoff
 Date Created: 8/22/2019
-Version: 2.0
-Date Last Modified: 9/13/19
+Version: 2.1
+Date Last Modified: 1/27/20
 Modified by: Joshua Novikoff
-Modification log: Made final touches, final version/public release
+Modification log: Added form action to store data in local database
 
 				  
 -->
@@ -44,7 +44,7 @@ Modification log: Made final touches, final version/public release
 	<h1>Service Inquiry</h1>
 <br>
 <fieldset>
-<form action="mailto:jnovikoff00@gmail.com?subject=Job%20Inquiry%20Mail" enctype="text/plain" method="POST">
+<form action="gu_thankyou.php" method="POST">
 		<label for="name">Name:</label> 
 		<input type="text" name="Name" id="name" placeholder="first and last name" required /><br>
 		
@@ -52,7 +52,7 @@ Modification log: Made final touches, final version/public release
 		<input type="email" name="contactEmail" id="email" placeholder="email@email.com" required /><br>
 		
 		<label for="phone">Phone number:</label>
-		<input type="tel" name="contacPhone" id="phone" placeholder="(###) ###-####" required 
+		<input type="tel" name="contactPhone" id="phone" placeholder="(###) ###-####" required 
 		pattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$" /> 
 		<br>		
 
