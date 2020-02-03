@@ -129,8 +129,8 @@ form{
     margin-right: auto;
     text-align: left;
 }
-.btn:active {
-	background-color: gray;
+.btn {
+	background-color: #e7e7e7; color: black;
 }
 
 /*==================
@@ -234,8 +234,8 @@ form{
     margin-right: auto;
 	text-align: left;
 }
-.btn:hover{
-	background-color: gray;
+.btn{
+	background-color: #e7e7e7; color: black;
 }
 
 /*==================
