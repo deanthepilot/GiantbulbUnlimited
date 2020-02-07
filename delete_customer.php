@@ -1,10 +1,19 @@
+<!--/********************************************************************************************************************************/
+/*  Date	Name	Description                                 																*/
+/*  ----------------------------------------------------------------------------------------------------------------------------*/
+/*                                                                  															*/
+/*  2/7/2020  JNovikoff   Added require of database.php & call to getDB(); 													*/
+/********************************************************************************************************************************/-->
+
 <?php
-$dsn = 'mysql:host=localhost;dbname=gusystem';
-            $username = 'root';
-            $password = 'Pa$$w0rd';
+require('./model/database.php');
+//$dsn = 'mysql:host=localhost;dbname=gusystem';
+//            $username = 'root';
+//            $password = 'Pa$$w0rd';
 
             try {
-                $db = new PDO($dsn, $username, $password);
+//                $db = new PDO($dsn, $username, $password);
+                $db = Database::getDB();
 
             } catch (PDOException $e) {
                 $error_message = $e->getMessage();
@@ -19,9 +28,9 @@ $employeeID = filter_input(INPUT_POST, 'employee_id', FILTER_VALIDATE_INT);
 // Delete the product from the database
 if ($inquiryID != false && $employeeID != false) {
     $query = 'DELETE FROM inquiry
-              WHERE employeeID = :employee_id';
+              WHERE inquiryID = :inquiry_id';
     $statement = $db->prepare($query);
-    $statement->bindValue(':employee_id', $employeeID);
+    $statement->bindValue(':inquiry_id', $inquiryID);
     $success = $statement->execute();
     $statement->closeCursor();    
 }

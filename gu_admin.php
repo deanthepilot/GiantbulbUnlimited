@@ -4,9 +4,9 @@
 Original Author: Joshua Novikoff
 Date Created: 1/31/2020
 Version: 1.0
-Date Last Modified: 1/31/2020
+Date Last Modified: 2/7/2020
 Modified by: Joshua Novikoff
-Modification log: Initial deployment
+Modification log: Added require of database.php & call to getDB();
 
 				  
 -->
@@ -31,27 +31,32 @@ Modification log: Initial deployment
 
 <body>
 <?php
+    require('./model/database.php');
+    require('./model/employee.php');
+    require('./model/inquiry.php');
     
     //$inquiryName = filter_input(INPUT_POST, 'Name');
     /* echo "Fields: " . $inquiryName . $inquiryEmail . $inquiryPhone . $inquiryPrice . $inquiryMsg;  */
 	
-	if (!isset($employee_id)) {
-    $employee_id = filter_input(INPUT_GET, 'employee_id', 
-            FILTER_VALIDATE_INT);
-    if ($employee_id == NULL || $employee_id == FALSE) {
-        $employee_id = 1;
-    }
-	}
+//	if (!isset($employee_id)) {
+//    $employee_id = filter_input(INPUT_GET, 'employee_id', 
+//            FILTER_VALIDATE_INT);
+//    if ($employee_id == NULL || $employee_id == FALSE) {
+//        $employee_id = 1;
+//    }
+//	}
     
     // Validate inputs
     
         
-            $dsn = 'mysql:host=localhost;dbname=gusystem';
-            $username = 'root';
-            $password = 'Pa$$w0rd';
+            //$dsn = 'mysql:host=localhost;dbname=gusystem';
+            //$username = 'root';
+            //$password = 'Pa$$w0rd';
 
             try {
-                $db = new PDO($dsn, $username, $password);
+                //$db = new PDO($dsn, $username, $password);
+                $db = Database::getDB();  //function 1
+                
 
             } catch (PDOException $e) {
                 $error_message = $e->getMessage();
@@ -60,19 +65,21 @@ Modification log: Initial deployment
                 exit();
             }
 
-            // Add the product to the database  
-            $query = 'SELECT employeeID, firstName FROM employee ORDER BY employeeID';                         
-            $statement = $db->prepare($query);            
-            $statement->execute();
-			$employees = $statement;
+            // Add the inquiry to the database  
+//            $query = 'SELECT employeeID, firstName FROM employee ORDER BY employeeID';                         
+//            $statement = $db->prepare($query);            
+//            $statement->execute();
+//            $employees = $statement;
+            $employees = getEmployee();   //function 2
             /* echo "Fields: " . $inquiryName . $inquiryEmail . $inquiryPhone . $inquiryPrice . $inquiryMsg; */
 			
-			$query2 = 'SELECT * FROM inquiry WHERE employeeID = :employeeID '
-				. 'ORDER BY inquiryEmail';                         
-            $statement2 = $db->prepare($query2); 
-			$statement2->bindValue(":employeeID", $employee_id);
-            $statement2->execute();
-			$inquiries = $statement2;
+//            $query2 = 'SELECT * FROM inquiry WHERE employeeID = :employeeID '
+//				. 'ORDER BY inquiryEmail';                         
+//            $statement2 = $db->prepare($query2); 
+//            $statement2->bindValue(":employeeID", $employee_id);
+//            $statement2->execute();
+//            $inquiries = $statement2;
+            $inquiries = getInquiry();   //function 3
             /* echo "Fields: " . $inquiryName . $inquiryEmail . $inquiryPhone . $inquiryPrice . $inquiryMsg; */
 			
 			
@@ -85,23 +92,10 @@ Modification log: Initial deployment
 	<li><a href="gu_pricing.html">Pricing</a></li>
 	<li><a href="gu_examples.html">Examples</a></li>
 	<li><a href="gu_contact.html">Contact</a></li>
+        <li><a href="gu_login.php">Admin</a></li>
 </ul>
 </nav>
-<aside>
-        <!-- display a list of employees -->
-        <h2>Employees</h2>
-        <nav>
-        <ul>
-            <?php foreach ($employees as $employee) : ?>
-            <li><a href="?employee_id=<?php echo $employee['employeeID']; ?>">
-                    <?php echo $employee['firstName']; ?>
-                </a>
-            </li>
-            <?php endforeach; ?>
-        </ul>
-        </nav>          
-    </aside>
-	        <table>
+    <table class="inquiryTable">
             <tr>
                 <th>Name</th>
                 <th>Email</th>
@@ -124,6 +118,19 @@ Modification log: Initial deployment
             </tr>
             <?php endforeach; ?>
         </table>
+<aside>
+        <!-- display a list of employees -->
+        <h2>Employees</h2>        
+        <ul>
+            <?php foreach ($employees as $employee) : ?>
+            <li><a href="?employee_id=<?php echo $employee['employeeID']; ?>">
+                    <?php echo $employee['firstName']; ?>
+                </a>
+            </li>
+            <?php endforeach; ?>
+        </ul>         
+    </aside>
+	  
 
 <footer>
 Giantbulb Unlimited &#8226; 57814 Loower Moor Dr, New York NY

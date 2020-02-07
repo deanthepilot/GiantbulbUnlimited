@@ -4,9 +4,9 @@
 Original Author: Joshua Novikoff
 Date Created: 1/27/2020
 Version: 1.0
-Date Last Modified: 1/27/2020
+Date Last Modified: 2/7/2020
 Modified by: Joshua Novikoff
-Modification log: Initial deployment
+Modification log: Added require of database.php & call to getDB();
 
 				  
 -->
@@ -31,7 +31,7 @@ Modification log: Initial deployment
 
 <body>
 <?php
-    
+    require('./model/database.php');
     $inquiryName = filter_input(INPUT_POST, 'Name');
     $inquiryEmail = filter_input(INPUT_POST, 'contactEmail');
     $inquiryPhone = filter_input(INPUT_POST, 'contactPhone');
@@ -47,12 +47,13 @@ Modification log: Initial deployment
         echo "Form Data Error: " . $error; 
         exit();
         } else {
-            $dsn = 'mysql:host=localhost;dbname=gusystem';
-            $username = 'root';
-            $password = 'Pa$$w0rd';
+//            $dsn = 'mysql:host=localhost;dbname=gusystem';
+//            $username = 'root';
+//            $password = 'Pa$$w0rd';
 
             try {
-                $db = new PDO($dsn, $username, $password);
+                //$db = new PDO($dsn, $username, $password);
+                $db = Database::getDB();
 
             } catch (PDOException $e) {
                 $error_message = $e->getMessage();
@@ -84,7 +85,8 @@ Modification log: Initial deployment
 	<li><a href="gu_about.html">About</a></li>
 	<li><a href="gu_pricing.html">Pricing</a></li>
 	<li><a href="gu_examples.html">Examples</a></li>
-	<li><a href="gu_contact.html">Contact</a></li>
+	<li><a href="gu_contact.html">Contact</a></li>        
+        <li><a href="gu_login.php">Admin</a></li>
 </ul>
 </nav>
 <main>

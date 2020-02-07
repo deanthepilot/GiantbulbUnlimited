@@ -213,7 +213,27 @@ Desktop Styles
 =================*/
 
 @media screen and (min-width:641px){
-
+    
+/*===========
+Aside Styles
+============*/
+aside > h2 {
+    padding: auto;
+    display: block;
+    float: left;
+}
+aside ul li {
+    list-style-type: disc;
+    display: block;
+}
+/*==================
+Inquiry Table Styles
+====================*/
+table.inquiryTable {
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-block;
+}
 /*==================
 Contact Form Styles
 ===================*/
@@ -236,6 +256,8 @@ form{
 }
 .btn{
 	background-color: #e7e7e7; color: black;
+        margin-left: 15px;
+        margin-bottom: 5px;
 }
 
 /*==================
