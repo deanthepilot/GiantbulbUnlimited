@@ -32,6 +32,7 @@ Modification log: Added require of database.php & call to getDB();
 <body>
 <?php
     require('./model/database.php');
+    $error_message = null;
     $inquiryName = filter_input(INPUT_POST, 'Name');
     $inquiryEmail = filter_input(INPUT_POST, 'contactEmail');
     $inquiryPhone = filter_input(INPUT_POST, 'contactPhone');
@@ -61,7 +62,7 @@ Modification log: Added require of database.php & call to getDB();
                 echo "DB Error: " . $error_message; 
                 exit();
             }
-
+        if (!$error_message){
             // Add the product to the database  
             $query = 'INSERT INTO inquiry
                          (inquiryName, inquiryEmail, inquiryPhone, inquiryPrice, inquiryMsg)
@@ -72,10 +73,22 @@ Modification log: Added require of database.php & call to getDB();
             $statement->bindValue(':inquiryEmail', $inquiryEmail);
             $statement->bindValue(':inquiryPhone', $inquiryPhone);
             $statement->bindValue(':inquiryPrice', $inquiryPrice);
-            $statement->bindValue(':inquiryMsg', $inquiryMsg);
-            $statement->execute();
+            $statement->bindValue(':inquiryMsg', $inquiryMsg);            
+            try {
+                $count= $statement->execute();
+            } catch (Exception $ex) {
+                $error_message = "We are experiencing technical difficulties. Please try again later.";
+            }
             $statement->closeCursor();
             /* echo "Fields: " . $inquiryName . $inquiryEmail . $inquiryPhone . $inquiryPrice . $inquiryMsg; */
+            
+            if ($count < 1){
+                $error_message = "We are experiencing technical difficulties. Please try again later.";
+            } else {
+                $error_message = "Thank you, $inquiryName for contacting me! I will get back to you shortly.";
+            }
+        }
+            
 }
 ?>
 <nav>
@@ -90,7 +103,7 @@ Modification log: Added require of database.php & call to getDB();
 </ul>
 </nav>
 <main>
-<h1>Thank you, <?php echo $inquiryName; ?>, for contacting me! I will get back to you shortly.</h1>
+<h1><?php echo $error_message; ?></h1>
 </main>
 
 <footer>

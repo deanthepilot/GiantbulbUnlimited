@@ -6,7 +6,7 @@
 /********************************************************************************************************************************/-->
 
 <?php
-require('./model/database.php');
+require ('./model/database.php');
 //$dsn = 'mysql:host=localhost;dbname=gusystem';
 //            $username = 'root';
 //            $password = 'Pa$$w0rd';
@@ -17,7 +17,7 @@ require('./model/database.php');
 
             } catch (PDOException $e) {
                 $error_message = $e->getMessage();
-                /* include('database_error.php'); */
+                //include('./database_error.php');
                 echo "DB Error: " . $error_message; 
                 exit();
             }
@@ -36,4 +36,5 @@ if ($inquiryID != false && $employeeID != false) {
 }
 
 // Display the Product List page
-include('gu_admin.php');
+//include('gu_admin.php');
+header("Location: gu_admin.php");
