@@ -38,6 +38,7 @@ Modification log: Added require of database.php & call to getDB();
     $inquiryPhone = filter_input(INPUT_POST, 'contactPhone');
     $inquiryPrice = filter_input(INPUT_POST, 'cost');
     $inquiryMsg = filter_input(INPUT_POST, 'comment');
+    $employeeID = mt_rand(1, 20);
     /* echo "Fields: " . $inquiryName . $inquiryEmail . $inquiryPhone . $inquiryPrice . $inquiryMsg;  */
     
     // Validate inputs
@@ -65,15 +66,16 @@ Modification log: Added require of database.php & call to getDB();
         if (!$error_message){
             // Add the product to the database  
             $query = 'INSERT INTO inquiry
-                         (inquiryName, inquiryEmail, inquiryPhone, inquiryPrice, inquiryMsg)
+                         (inquiryName, inquiryEmail, inquiryPhone, inquiryPrice, inquiryMsg, employeeID)
                       VALUES
-                         (:inquiryName, :inquiryEmail, :inquiryPhone, :inquiryPrice, :inquiryMsg)';
+                         (:inquiryName, :inquiryEmail, :inquiryPhone, :inquiryPrice, :inquiryMsg, :employeeID)';
             $statement = $db->prepare($query);
             $statement->bindValue(':inquiryName', $inquiryName);
             $statement->bindValue(':inquiryEmail', $inquiryEmail);
             $statement->bindValue(':inquiryPhone', $inquiryPhone);
             $statement->bindValue(':inquiryPrice', $inquiryPrice);
-            $statement->bindValue(':inquiryMsg', $inquiryMsg);            
+            $statement->bindValue(':inquiryMsg', $inquiryMsg);
+            $statement->bindValue(':employeeID', $employeeID);
             try {
                 $count= $statement->execute();
             } catch (Exception $ex) {
